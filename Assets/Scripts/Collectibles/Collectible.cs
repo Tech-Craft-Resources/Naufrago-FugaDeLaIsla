@@ -27,7 +27,7 @@ public class Collectible : MonoBehaviour
 
         if (ScoreManager.Instance != null)
             ScoreManager.Instance.AddScore(pointValue);
-
+            
         if (AudioManager.Instance != null)
             AudioManager.Instance.PlaySFX(collectSound);
 
@@ -36,16 +36,21 @@ public class Collectible : MonoBehaviour
             case CollectibleType.Banana:
                 if (GameManager.Instance != null)
                     GameManager.Instance.AddLife(1);
+                    Debug.Log("Puntos: " + pointValue);
+                    Debug.Log("Vida: " + GameManager.Instance.lives);
                 break;
 
             case CollectibleType.PoisonApple:
                 if (GameManager.Instance != null)
                     GameManager.Instance.TakeDamage(1);
+                    Debug.Log("Vida: " + GameManager.Instance.lives);
                 break;
 
             case CollectibleType.FrogPowerUp:
                 if (playerJump != null)
                     playerJump.ActivateFrog();
+                    Debug.Log("Puntos: " + pointValue);
+
                 break;
 
             case CollectibleType.Lifesaver:

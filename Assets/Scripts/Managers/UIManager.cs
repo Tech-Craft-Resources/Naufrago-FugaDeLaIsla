@@ -32,11 +32,13 @@ public class UIManager : MonoBehaviour
 
     public void UpdateScore(int score)
     {
+        if (scoreText == null) return;
         scoreText.text = score.ToString("D6");
     }
 
     public void UpdateLives(int lives)
     {
+        if (lifeIcons == null || lifeIcons.Length == 0) return;
         for (int i = 0; i < lifeIcons.Length; i++)
             lifeIcons[i].color = i < lives ? Color.white : new Color(1, 1, 1, 0.2f);
     }

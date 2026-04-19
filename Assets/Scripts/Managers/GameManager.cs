@@ -22,9 +22,20 @@ public class GameManager : MonoBehaviour
         checkpointPos = player.transform.position;
     }
 
+    // Usado por enemigos y manzana envenenada — solo quita vida, sin respawn
     public void TakeDamage(int amount)
     {
         lives -= amount;
+        UIManager.Instance.UpdateLives(lives);
+
+        if (lives <= 0)
+            GameOver();
+    }
+
+    // Usado por DeathZone (agua/hueco) — quita vida Y hace respawn
+    public void FallDeath()
+    {
+        lives -= 1;
         UIManager.Instance.UpdateLives(lives);
 
         if (lives <= 0)
