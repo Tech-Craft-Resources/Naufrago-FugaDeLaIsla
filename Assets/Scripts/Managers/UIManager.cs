@@ -13,6 +13,7 @@ public class UIManager : MonoBehaviour
 
     private float elapsedTime = 0f;
     private bool timing = true;
+    private PlayerJump playerJump;
 
     void Awake()
     {
@@ -21,19 +22,39 @@ public class UIManager : MonoBehaviour
 
     void Start()
     {
+        // Ocultar la barra al inicio
         if (powerUpBar != null)
             powerUpBar.gameObject.SetActive(false);
+
+        // Buscar el PlayerJump en la escena
+        GameObject player = GameObject.FindWithTag("Player");
+        if (player != null)
+            playerJump = player.GetComponent<PlayerJump>();
     }
 
     void Update()
     {
-        if (!timing) return;
-        if (timerText == null) return;
+        // Timer
+        if (timing && timerText != null)
+        {
+            elapsedTime += Time.deltaTime;
+            int m = (int)(elapsedTime / 60);
+            int s = (int)(elapsedTime % 60);
+            timerText.text = string.Format("{0:00}:{1:00}", m, s);
+        }
 
-        elapsedTime += Time.deltaTime;
-        int m = (int)(elapsedTime / 60);
-        int s = (int)(elapsedTime % 60);
-        timerText.text = string.Format("{0:00}:{1:00}", m, s);
+        // Barra sincronizada directamente con el estado real de PlayerJump
+        if (powerUpBar == null || playerJump == null) return;
+
+        if (playerJump.IsFrogActive)
+        {
+            powerUpBar.gameObject.SetActive(true);
+            powerUpBar.fillAmount = playerJump.FrogTimeRemaining / playerJump.FrogDuration;
+        }
+        else
+        {
+            powerUpBar.gameObject.SetActive(false);
+        }
     }
 
     public void UpdateScore(int score)
@@ -49,27 +70,7 @@ public class UIManager : MonoBehaviour
             lifeIcons[i].color = i < lives ? Color.white : new Color(1, 1, 1, 0.2f);
     }
 
-    public void ShowPowerUpBar(float duration)
-    {
-        if (powerUpBar != null)
-        {
-            powerUpBar.gameObject.SetActive(true);
-            StartCoroutine(DrainBar(duration));
-        }
-    }
-
-    IEnumerator DrainBar(float duration)
-    {
-        float t = 0f;
-        while (t < duration)
-        {
-            t += Time.deltaTime;
-            powerUpBar.fillAmount = 1f - (t / duration);
-            yield return null;
-        }
-        HidePowerUpBar();
-    }
-
+    // Se mantiene para que DeathZone y otros scripts puedan forzar ocultar la barra
     public void HidePowerUpBar()
     {
         if (powerUpBar != null)

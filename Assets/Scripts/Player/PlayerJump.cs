@@ -12,6 +12,11 @@ public class PlayerJump : MonoBehaviour
     private bool frogActive = false;
     private float frogTimer = 0f;
 
+    // Propiedades públicas para que UIManager lea el estado real
+    public bool IsFrogActive => frogActive;
+    public float FrogTimeRemaining => frogTimer;
+    public float FrogDuration => frogDuration;
+
     [Header("Ground Check")]
     public Transform groundCheck;
     public float checkRadius = 0.1f;
@@ -50,14 +55,12 @@ public class PlayerJump : MonoBehaviour
         frogActive = true;
         frogTimer = frogDuration;
         jumpForce = jumpForceBase * frogMultiplier;
-        UIManager.Instance.ShowPowerUpBar(frogDuration);
     }
 
-    void DeactivateFrog()
+    public void DeactivateFrog()
     {
         frogActive = false;
         jumpForce = jumpForceBase;
-        UIManager.Instance.HidePowerUpBar();
     }
 
     void OnDrawGizmosSelected()
