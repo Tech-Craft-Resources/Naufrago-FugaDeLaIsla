@@ -19,6 +19,12 @@ public class UIManager : MonoBehaviour
         Instance = this;
     }
 
+    void Start()
+    {
+        if (powerUpBar != null)
+            powerUpBar.gameObject.SetActive(false);
+    }
+
     void Update()
     {
         if (!timing) return;
