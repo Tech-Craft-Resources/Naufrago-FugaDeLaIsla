@@ -65,4 +65,19 @@ public class PlayerHealth : MonoBehaviour
         // Restaurar colisiones
         Physics2D.IgnoreLayerCollision(playerLayer, enemyLayer, false);
     }
+
+    public void StartInvincibility()
+    {
+        if (!isInvincible)
+            StartCoroutine(InvincibilityRoutine());
+    }
+
+    public void ForceResetSprite()
+    {
+        StopAllCoroutines();       // cancela cualquier parpadeo en curso
+        sr.enabled = true;         // garantiza que el sprite es visible
+        isInvincible = false;      // limpia el estado
+        // Restaurar colisiones por si quedaron ignoradas
+        Physics2D.IgnoreLayerCollision(playerLayer, enemyLayer, false);
+    }
 }

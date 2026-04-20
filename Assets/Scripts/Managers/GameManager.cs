@@ -52,10 +52,14 @@ public class GameManager : MonoBehaviour
 
     System.Collections.IEnumerator Respawn()
     {
-        player.SetActive(false);
-        yield return new WaitForSeconds(1f);
+        // Resetear el sprite antes de mover (cancela parpadeo colgado)
+        PlayerHealth ph = player.GetComponent<PlayerHealth>();
+        if (ph != null) ph.ForceResetSprite();
+
+        // Mover al checkpoint — la cámara nunca pierde el target
         player.transform.position = checkpointPos;
-        player.SetActive(true);
+
+        yield return new WaitForSeconds(0.1f);
     }
 
     public void SetCheckpoint(Vector3 pos)
