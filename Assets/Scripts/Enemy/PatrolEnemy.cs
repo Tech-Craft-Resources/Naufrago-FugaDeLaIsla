@@ -6,38 +6,39 @@ public class PatrolEnemy : MonoBehaviour
     public float speed = 1.5f;
     public Transform pointA;
     public Transform pointB;
-
     private Transform target;
     private SpriteRenderer sr;
+    private Rigidbody2D rb;
 
     void Start()
     {
         target = pointB;
         sr = GetComponent<SpriteRenderer>();
+        rb = GetComponent<Rigidbody2D>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (pointA == null || pointB == null) return;
 
-        transform.position = Vector2.MoveTowards(
-            transform.position,
-            target.position,
-            speed * Time.deltaTime);
+        Vector2 newPos = Vector2.MoveTowards(
+            rb.position,
+            new Vector2(target.position.x, rb.position.y),
+            speed * Time.fixedDeltaTime);
+        rb.MovePosition(newPos);
 
-        // Voltear el sprite según la dirección
-        if (target == pointB)
-            sr.flipX = false;
-        else
-            sr.flipX = true;
+        sr.flipX = (target != pointB);
 
-        if (Vector2.Distance(transform.position, target.position) < 0.1f)
+        if (Mathf.Abs(rb.position.x - target.position.x) < 0.1f)
             target = target == pointA ? pointB : pointA;
     }
 
-    void OnCollisionEnter2D(Collision2D col)
+    void OnTriggerEnter2D(Collider2D other)
     {
-        if (col.gameObject.CompareTag("Player"))
-            GameManager.Instance.TakeDamage(1);
+        if (!other.CompareTag("Player")) return;
+
+        PlayerHealth health = other.GetComponent<PlayerHealth>();
+        if (health != null)
+            health.TryTakeDamage(1);
     }
 }

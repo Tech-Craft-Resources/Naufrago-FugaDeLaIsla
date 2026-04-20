@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public enum CollectibleType
 {
@@ -19,53 +20,78 @@ public class Collectible : MonoBehaviour
     [Header("Audio")]
     public AudioClip collectSound;
 
+    // Solo la manzana necesita este flag
+    private bool appleOnCooldown = false;
+
+    // ── Coleccionables normales (entrar al trigger los destruye) ──────────
     void OnTriggerEnter2D(Collider2D other)
     {
         if (!other.CompareTag("Player")) return;
+        if (type == CollectibleType.PoisonApple) return; // La manzana usa Stay
 
-        PlayerJump playerJump = other.GetComponent<PlayerJump>();
-
-        if (ScoreManager.Instance != null)
-            ScoreManager.Instance.AddScore(pointValue);
-            
-        if (AudioManager.Instance != null)
-            AudioManager.Instance.PlaySFX(collectSound);
+        PlayerJump  playerJump   = other.GetComponent<PlayerJump>();
+        PlayerHealth playerHealth = other.GetComponent<PlayerHealth>();
 
         switch (type)
         {
             case CollectibleType.Banana:
-                if (GameManager.Instance != null)
-                    GameManager.Instance.AddLife(1);
-                    Debug.Log("Puntos: " + pointValue);
-                    Debug.Log("Vida: " + GameManager.Instance.lives);
-                break;
-
-            case CollectibleType.PoisonApple:
-                if (GameManager.Instance != null)
-                    GameManager.Instance.TakeDamage(1);
-                    Debug.Log("Vida: " + GameManager.Instance.lives);
+                ScoreManager.Instance?.AddScore(pointValue);
+                AudioManager.Instance?.PlaySFX(collectSound);
+                GameManager.Instance?.AddLife(1);
+                Destroy(gameObject);
                 break;
 
             case CollectibleType.FrogPowerUp:
-                if (playerJump != null)
-                    playerJump.ActivateFrog();
-                    Debug.Log("Puntos: " + pointValue);
-
+                ScoreManager.Instance?.AddScore(pointValue);
+                AudioManager.Instance?.PlaySFX(collectSound);
+                playerJump?.ActivateFrog();
+                Destroy(gameObject);
                 break;
 
             case CollectibleType.Lifesaver:
-                // Por ahora solo da puntos, la mecánica de flotación va después
-                break;
-
             case CollectibleType.Chicken:
-                // Bonus de puntos, ya sumado arriba
-                break;
-
             case CollectibleType.Chest:
-                // Bonus masivo de puntos, ya sumado arriba
+                ScoreManager.Instance?.AddScore(pointValue);
+                AudioManager.Instance?.PlaySFX(collectSound);
+                Destroy(gameObject);
                 break;
         }
+    }
 
-        Destroy(gameObject);
+    // ── Manzana envenenada: detecta mientras el jugador esté adentro ──────
+    void OnTriggerStay2D(Collider2D other)
+    {
+        if (type != CollectibleType.PoisonApple) return;
+        if (!other.CompareTag("Player")) return;
+        if (appleOnCooldown) return;
+
+        PlayerHealth playerHealth = other.GetComponent<PlayerHealth>();
+        if (playerHealth == null) return;
+
+        bool damaged = playerHealth.TryTakeDamage(1);
+        if (damaged)
+        {
+            AudioManager.Instance?.PlaySFX(collectSound);
+            Destroy(gameObject);
+        }
+        else
+        {
+            // Jugador invencible: esperar a que termine y reintentar
+            StartCoroutine(AppleCooldown(playerHealth));
+        }
+    }
+
+    IEnumerator AppleCooldown(PlayerHealth playerHealth)
+    {
+        appleOnCooldown = true;
+
+        // Espera hasta que el jugador deje de ser invencible
+        yield return new WaitUntil(() => !playerHealth.IsInvincible);
+
+        // Un frame extra para que el motor registre el Stay correctamente
+        yield return null;
+
+        appleOnCooldown = false;
+        // OnTriggerStay2D se encargará del resto en el siguiente frame
     }
 }
