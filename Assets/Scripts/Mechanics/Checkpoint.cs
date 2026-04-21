@@ -11,6 +11,7 @@ public class Checkpoint : MonoBehaviour
 
         isActivated = true;
         GameManager.Instance.SetCheckpoint(transform.position);
+        GetComponent<Animator>().SetTrigger("Active");
         Debug.Log("Checkpoint activado: " + gameObject.name);
     }
 }
