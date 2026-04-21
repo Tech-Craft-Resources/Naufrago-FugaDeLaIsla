@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3249768325460547460}
   - component: {fileID: 8683653225537218673}
   - component: {fileID: 2473951836422178223}
+  - component: {fileID: 7638326017737521297}
   m_Layer: 9
   m_Name: GoldenBall
   m_TagString: Untagged
@@ -28,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 4661146210558563369}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 21.506905, y: 11.739771, z: 2.6674218}
+  m_LocalPosition: {x: 13.52, y: -0.75, z: 4.001133}
   m_LocalScale: {x: 12, y: 12, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -136,3 +137,24 @@ CircleCollider2D:
   m_Offset: {x: 0.0029366813, y: 0.04600541}
   serializedVersion: 2
   m_Radius: 0.04973364
+--- !u!95 &7638326017737521297
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4661146210558563369}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0a9151fb291eb0e4eb1cf46c376642c8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
