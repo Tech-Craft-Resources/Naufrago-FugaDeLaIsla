@@ -38,14 +38,16 @@ public class Collectible : MonoBehaviour
                 ScoreManager.Instance?.AddScore(pointValue);
                 AudioManager.Instance?.PlaySFX(collectSound);
                 GameManager.Instance?.AddLife(1);
-                Destroy(gameObject);
+                GetComponent<Animator>().SetTrigger("Collect");
+                Destroy(gameObject, 0.5f);
                 break;
 
             case CollectibleType.FrogPowerUp:
                 ScoreManager.Instance?.AddScore(pointValue);
                 AudioManager.Instance?.PlaySFX(collectSound);
                 playerJump?.ActivateFrog();
-                Destroy(gameObject);
+                GetComponent<Animator>().SetTrigger("Collect");
+                Destroy(gameObject, 0.5f);
                 break;
 
             case CollectibleType.Lifesaver:
@@ -72,7 +74,8 @@ public class Collectible : MonoBehaviour
         if (damaged)
         {
             AudioManager.Instance?.PlaySFX(collectSound);
-            Destroy(gameObject);
+            GetComponent<Animator>().SetTrigger("Collect");
+            Destroy(gameObject, 0.5f);
         }
         else
         {
