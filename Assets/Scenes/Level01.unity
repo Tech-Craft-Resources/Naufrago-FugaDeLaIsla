@@ -1513,7 +1513,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -1608,9 +1608,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: d10c9459e421e994dabe19b5b0636982, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.7
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -1708,6 +1708,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicSource: {fileID: 1182989925}
   sfxSource: {fileID: 1182989924}
+  collectBanana: {fileID: 8300000, guid: ce459795f872d224b8c1275b696c3c98, type: 3}
+  collectApple: {fileID: 8300000, guid: 2adb1667fe0a71c48ab72a3993e8f36f, type: 3}
+  collectGoldenBall: {fileID: 8300000, guid: bf8d165095d48184f8de37ec017aee8e, type: 3}
+  jump: {fileID: 8300000, guid: a087e4be85fb1f54fbb416ba1f9ca0bb, type: 3}
+  boostedJump: {fileID: 8300000, guid: 36e7865713a98d14a9d02dde38be81ff, type: 3}
+  punch: {fileID: 8300000, guid: 8fa56707b89e63f40b79691209f8737c, type: 3}
+  fallWater: {fileID: 8300000, guid: f7ccaef28f1393c4abaa95fc12e8ad32, type: 3}
 --- !u!1 &1216908962
 GameObject:
   m_ObjectHideFlags: 0
@@ -23647,7 +23654,6 @@ SceneRoots:
   - {fileID: 1342921688}
   - {fileID: 1118958186}
   - {fileID: 754597270}
-  - {fileID: 299777784}
   - {fileID: 2052174536}
   - {fileID: 372889809}
   - {fileID: 1957065817}
@@ -23655,3 +23661,4 @@ SceneRoots:
   - {fileID: 1235063517}
   - {fileID: 35132290}
   - {fileID: 153740768}
+  - {fileID: 299777784}

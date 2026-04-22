@@ -47,7 +47,13 @@ public class PlayerJump : MonoBehaviour
     public void Jump()
     {
         if (isGrounded)
+        {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            if (jumpForce > jumpForceBase)
+                AudioManager.Instance?.PlayBoostedJump();
+            else
+                AudioManager.Instance?.PlayJump();
+        }
     }
 
     public void ActivateFrog()

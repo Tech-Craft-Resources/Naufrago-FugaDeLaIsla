@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour
     {
         lives -= amount;
         UIManager.Instance.UpdateLives(lives);
+        AudioManager.Instance?.PlayPunch();
 
         if (lives <= 0)
             GameOver();
@@ -37,6 +38,7 @@ public class GameManager : MonoBehaviour
     {
         lives -= 1;
         UIManager.Instance.UpdateLives(lives);
+        AudioManager.Instance?.PlayFallWater();
 
         if (lives <= 0)
             GameOver();

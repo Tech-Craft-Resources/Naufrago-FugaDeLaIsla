@@ -101,7 +101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 0
   pointValue: 50
-  collectSound: {fileID: 0}
+  collectSound: {fileID: 8300000, guid: ce459795f872d224b8c1275b696c3c98, type: 3}
 --- !u!58 &830219680007417292
 CircleCollider2D:
   m_ObjectHideFlags: 0
