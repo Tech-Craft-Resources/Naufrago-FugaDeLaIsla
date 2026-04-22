@@ -73,6 +73,7 @@ public class Collectible : MonoBehaviour
         bool damaged = playerHealth.TryTakeDamage(1);
         if (damaged)
         {
+            ScoreManager.Instance?.DecreaseScore(pointValue);
             AudioManager.Instance?.PlaySFX(collectSound);
             GetComponent<Animator>().SetTrigger("Collect");
             Destroy(gameObject, 0.5f);

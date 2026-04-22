@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class PatrolEnemy : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class PatrolEnemy : MonoBehaviour
     private Transform target;
     private SpriteRenderer sr;
     private Rigidbody2D rb;
+    public int damageScoreValue = 1;
 
     void Start()
     {
@@ -40,5 +42,6 @@ public class PatrolEnemy : MonoBehaviour
         PlayerHealth health = other.GetComponent<PlayerHealth>();
         if (health != null)
             health.TryTakeDamage(1);
-    }
+            ScoreManager.Instance?.DecreaseScore(damageScoreValue);
+        }
 }

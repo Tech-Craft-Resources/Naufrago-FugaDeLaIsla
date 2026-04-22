@@ -10,6 +10,7 @@ public class JumpEnemy : MonoBehaviour
 
     [Header("Daño")]
     public int damage = 1;
+    public int damageScoreValue = 1;
 
     private Vector2 originPosition;
     private Rigidbody2D rb;
@@ -64,6 +65,7 @@ public class JumpEnemy : MonoBehaviour
             if (ph != null)
             {
                 ph.TryTakeDamage(damage);
+                ScoreManager.Instance?.DecreaseScore(damageScoreValue);
             }
         }
     }

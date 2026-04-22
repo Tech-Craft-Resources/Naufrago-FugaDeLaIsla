@@ -135,7 +135,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 1
-  pointValue: 0
+  pointValue: 150
   collectSound: {fileID: 8300000, guid: 2adb1667fe0a71c48ab72a3993e8f36f, type: 3}
 --- !u!95 &7842593707783451373
 Animator:

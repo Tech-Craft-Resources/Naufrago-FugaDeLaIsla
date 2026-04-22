@@ -17,6 +17,12 @@ public class ScoreManager : MonoBehaviour
         UIManager.Instance.UpdateScore(score);
     }
 
+    public void DecreaseScore(int amount)
+    {
+        score -= amount;
+        UIManager.Instance.UpdateScore(score);
+    }
+
     public int GetScore()
     {
         return score;

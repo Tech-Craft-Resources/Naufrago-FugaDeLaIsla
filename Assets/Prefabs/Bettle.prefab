@@ -176,6 +176,7 @@ MonoBehaviour:
   jumpInterval: 2
   maxHeight: 10
   damage: 1
+  damageScoreValue: 100
 --- !u!95 &5927584338213585537
 Animator:
   serializedVersion: 5
